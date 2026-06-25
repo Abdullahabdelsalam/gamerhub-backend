@@ -20,6 +20,4 @@ public class Role extends BaseEntity{
     @Column(nullable = false, unique = true)
     private RoleName name;
 
-    @ManyToMany(mappedBy = "roles")
-    private Set<User> users = new HashSet<>();
 }
