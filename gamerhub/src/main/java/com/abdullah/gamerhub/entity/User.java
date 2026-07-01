@@ -2,19 +2,19 @@ package com.abdullah.gamerhub.entity;
 
 import com.abdullah.gamerhub.entity.enums.Provider;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
 
-@Getter
-@Setter
-@NoArgsConstructor
 
 @Entity
 @Table(name = "users")
+@Getter
+@Setter
+@NoArgsConstructor
+@Builder
+@AllArgsConstructor
 public class User extends BaseEntity {
 
     @Column(nullable = false, unique = true)
@@ -30,17 +30,14 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private Provider provider;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "user_roles",
 
-            joinColumns = @JoinColumn(
-                    name = "user_id"
-            ),
+            joinColumns = @JoinColumn(name = "user_id"),
 
-            inverseJoinColumns = @JoinColumn(
-                    name = "role_id"
-            )
+            inverseJoinColumns = @JoinColumn(name = "role_id")
     )
+    @Builder.Default
     private Set<Role> roles = new HashSet<>();
 }
