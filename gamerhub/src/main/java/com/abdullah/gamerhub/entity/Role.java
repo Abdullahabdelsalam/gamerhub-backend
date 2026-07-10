@@ -21,6 +21,8 @@ public class Role extends BaseEntity{
     @Column(nullable = false, unique = true)
     private RoleName name;
 
+    private  String description;
+
     @ManyToMany(mappedBy = "roles")
     @Builder.Default
     private Set<User> users = new HashSet<>();

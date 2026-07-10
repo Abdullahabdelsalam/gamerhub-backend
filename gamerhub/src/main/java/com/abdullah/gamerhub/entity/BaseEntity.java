@@ -10,10 +10,10 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @MappedSuperclass
-public class BaseEntity {
+public abstract class BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     private LocalDateTime createdAt;
