@@ -139,5 +139,4 @@ public class User extends BaseEntity {
     )
     @Builder.Default
     private Set<TournamentPlayer> tournamentParticipations = new HashSet<>();
-
 }

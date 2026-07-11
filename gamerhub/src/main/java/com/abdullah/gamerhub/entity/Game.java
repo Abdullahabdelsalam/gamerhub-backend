@@ -29,11 +29,13 @@ public class Game extends BaseEntity{
     private String description;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 30)
     private Genre genre;
 
     @Column(length = 500)
     private String imageUrl;
 
+    // tournament relation
     @OneToMany(mappedBy = "game", fetch = FetchType.LAZY)
     @Builder.Default
     private Set<Tournament> tournaments = new HashSet<>();
