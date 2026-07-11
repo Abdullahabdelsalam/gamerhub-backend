@@ -1,6 +1,8 @@
 package com.abdullah.gamerhub.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -11,8 +13,17 @@ import java.util.Set;
 @Entity
 @Table(name = "teams",
         indexes = {
-                @Index(name = "idx_team_name", columnList = "name")
-        })
+                @Index(name = "idx_team_name", columnList = "name"),
+                @Index(name = "idx_team_game", columnList = "game_id"),
+                @Index(name = "idx_team_owner", columnList = "owner_id")
+        },
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        name = "uk_team_name_game",
+                        columnNames = {"name", "game_id"}
+                )
+        }
+        )
 @Getter
 @Setter
 @AllArgsConstructor
@@ -21,30 +32,46 @@ import java.util.Set;
 public class Team extends BaseEntity{
 
     @NotBlank
-    @Size(max = 100)
+    @Size(min = 3 , max = 100)
     @Column(nullable = false, unique = true, length = 100)
     private String name;
 
+    @Size(max = 500)
     @Column(length = 500)
     private String logoUrl;
 
     @Column(length = 1000)
     private String description;
 
+    @Size(min = 1, max = 100)
+    @Column(nullable = false)
+    private Integer maxMembers;
+
+    @Column(length = 500)
+    private String discordInviteUrl;
 
     @Column(nullable = false)
-    private Integer  maxMembers;
+    @Builder.Default
+    private Boolean recruiting = true;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "owner_id", nullable = false)
+    @JoinColumn(name = "owner_id", nullable = false,
+            foreignKey = @ForeignKey(name = "fk_team_owner") )
     private User owner;
 
-    @OneToMany(mappedBy = "team", fetch = FetchType.LAZY)
+    @OneToMany(
+            mappedBy = "team",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
+    )
     @Builder.Default
     private Set<TeamMember> members = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "game_id", nullable = false)
+    @JoinColumn(name = "game_id", nullable = false,
+            foreignKey = @ForeignKey(name = "fk_team_game")
+    )
     private Game game;
 
 }
