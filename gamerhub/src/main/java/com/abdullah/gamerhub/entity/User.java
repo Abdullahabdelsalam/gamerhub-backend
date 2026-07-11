@@ -93,13 +93,14 @@ public class User extends BaseEntity {
     @Builder.Default
     private Set<RefreshToken> refreshTokens = new HashSet<>();
 
-
+    @OneToMany(mappedBy = "user")
+    private Set<TeamMember> teams;
 
 //    ManyToMany
 //            Role ok
 //
 //    OneToOne
-//            RefreshToken
+//            RefreshToken ok
 //
 //    OneToMany
 //            Posts
@@ -114,7 +115,7 @@ public class User extends BaseEntity {
 //            Notifications
 //
 //    OneToMany
-//    Owned Teams
+//    Owned Teams ok
 //
 //    OneToMany
 //    Team Memberships
