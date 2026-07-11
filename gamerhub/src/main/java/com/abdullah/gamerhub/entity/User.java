@@ -133,10 +133,10 @@ public class User extends BaseEntity {
     private Set<Team> ownedTeams = new HashSet<>();
 
     //Tournament Participations
-    @OneToMany(
-            mappedBy = "user",
-            fetch = FetchType.LAZY
-    )
-    @Builder.Default
-    private Set<TournamentPlayer> tournamentParticipations = new HashSet<>();
+//    @OneToMany(
+//            mappedBy = "user",
+//            fetch = FetchType.LAZY
+//    )
+//    @Builder.Default
+//    private Set<TournamentPlayer> tournamentParticipations = new HashSet<>();
 }

@@ -39,4 +39,9 @@ public class Game extends BaseEntity{
     @OneToMany(mappedBy = "game", fetch = FetchType.LAZY)
     @Builder.Default
     private Set<Tournament> tournaments = new HashSet<>();
+
+    // Team Relation
+    @OneToMany(mappedBy = "game", fetch = FetchType.LAZY)
+    @Builder.Default
+    private Set<Team> teams = new HashSet<>();
 }

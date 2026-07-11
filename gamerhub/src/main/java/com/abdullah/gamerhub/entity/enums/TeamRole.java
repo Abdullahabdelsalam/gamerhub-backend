@@ -1,7 +1,11 @@
 package com.abdullah.gamerhub.entity.enums;
 
 public enum TeamRole {
-    LEADER,
-    CO_LEADER,
-    MEMBER
+    TEAM_ROLE_OWNER,
+
+    TEAM_ROLE_CAPTAIN,
+
+    TEAM_ROLE_CO_CAPTAIN,
+
+    TEAM_ROLE_MEMBER
 }
