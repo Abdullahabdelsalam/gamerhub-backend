@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
@@ -14,7 +15,12 @@ import java.util.Set;
 
 
 @Entity
-@Table(name = "users")
+@Table(name = "users",
+        indexes = {
+                @Index(name = "idx_username", columnList = "username"),
+                @Index(name = "idx_email", columnList = "email")
+        }
+)
 @Getter
 @Setter
 @NoArgsConstructor
@@ -35,7 +41,7 @@ public class User extends BaseEntity {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @NotBlank
     @Column(nullable = false)
-    @Size(min = 8)
+    @Size(min = 8 , max = 255)
     private String password;
 
     @Column(length = 100)
@@ -52,27 +58,42 @@ public class User extends BaseEntity {
 
     private LocalDate birthDate;
 
+    @Pattern(
+            regexp = "^\\+?[0-9]{8,15}$",
+            message = "Invalid phone number"
+    )
+    @Column(length = 20)
     private  String phoneNumber;
 
+    @Column(length = 100)
     private String coverImageUrl;
 
+    @Column(length = 100)
     private String discordUsername;
 
+    @Column(length = 100)
     private String steamId;
 
+    @Column(length = 100)
     private String riotId;
 
+    @Column(length = 100)
     private String epicGamesId;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false , length = 30)
     private Provider provider;
 
     @Builder.Default
+    @Column(nullable = false)
     private Boolean enabled = true;
 
     @Builder.Default
+    @Column(nullable = false)
     private Boolean verified = false;
 
+
+    //Roles
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "user_roles",
@@ -84,6 +105,7 @@ public class User extends BaseEntity {
     @Builder.Default
     private Set<Role> roles = new HashSet<>();
 
+    //Refresh Tokens
     @OneToMany(
             mappedBy = "user",
             cascade = CascadeType.ALL,
@@ -93,39 +115,29 @@ public class User extends BaseEntity {
     @Builder.Default
     private Set<RefreshToken> refreshTokens = new HashSet<>();
 
-    @OneToMany(mappedBy = "user")
-    private Set<TeamMember> teams;
 
-//    ManyToMany
-//            Role ok
-//
-//    OneToOne
-//            RefreshToken ok
-//
-//    OneToMany
-//            Posts
-//
-//    OneToMany
-//            Comments
-//
-//    OneToMany
-//            Likes
-//
-//    OneToMany
-//            Notifications
-//
-//    OneToMany
-//    Owned Teams ok
-//
-//    OneToMany
-//    Team Memberships
-//
-//    OneToMany
-//    Tournament Participations
-//
-//    OneToMany
-//            Followers
-//
-//    OneToMany
-//            Following
+    //Team Memberships
+    @OneToMany(
+            mappedBy = "user",
+            fetch = FetchType.LAZY
+    )
+    @Builder.Default
+    private Set<TeamMember> teamMemberships = new HashSet<>();
+
+    //Owned Teams
+    @OneToMany(
+            mappedBy = "owner",
+            fetch = FetchType.LAZY
+    )
+    @Builder.Default
+    private Set<Team> ownedTeams = new HashSet<>();
+
+    //Tournament Participations
+    @OneToMany(
+            mappedBy = "user",
+            fetch = FetchType.LAZY
+    )
+    @Builder.Default
+    private Set<TournamentPlayer> tournamentParticipations = new HashSet<>();
+
 }

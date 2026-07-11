@@ -1,8 +1,9 @@
 package com.abdullah.gamerhub.entity.enums;
 
 public enum Provider {
-    LOCAL,
-    GOOGLE,
-    FACEBOOK,
-    GITHUB
+    PROVIDER_LOCAL,
+    PROVIDER_GOOGLE,
+    PROVIDER_FACEBOOK,
+    PROVIDER_GITHUB,
+    PROVIDER_DISCORD
 }
