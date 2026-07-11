@@ -33,8 +33,21 @@ public class RefreshToken extends BaseEntity {
     @Column(nullable = false)
     private Boolean revoked = false;
 
+    private LocalDateTime revokedAt;
+
+    @Column(length = 255)
+    private String deviceName;
+
+    @Column(length = 100)
+    private String ipAddress;
+
+    @Column(length = 255)
+    private String userAgent;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false ,
+            foreignKey = @ForeignKey(name = "fk_refresh_token_user")
+    )
     private User user;
 
 }
