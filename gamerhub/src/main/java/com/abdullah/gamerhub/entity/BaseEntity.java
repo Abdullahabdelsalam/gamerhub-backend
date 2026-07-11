@@ -37,14 +37,14 @@ public abstract class BaseEntity {
     @LastModifiedBy
     private String updatedBy;
 
-    @PrePersist
-    public void prePersist(){
-        createdAt = LocalDateTime.now();
-        updatedAt = LocalDateTime.now();
-    }
-
-    @PreUpdate
-    protected void  preUpdate(){
-        updatedAt = LocalDateTime.now();
-    }
+//    @PrePersist
+//    public void prePersist(){
+//        createdAt = LocalDateTime.now();
+//        updatedAt = LocalDateTime.now();
+//    }
+//
+//    @PreUpdate
+//    protected void  preUpdate(){
+//        updatedAt = LocalDateTime.now();
+//    }
 }
