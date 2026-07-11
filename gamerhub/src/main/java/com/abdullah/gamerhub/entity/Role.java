@@ -9,7 +9,11 @@ import java.util.Set;
 
 
 @Entity
-@Table(name = "roles")
+@Table(name = "roles",
+    indexes = {
+        @Index(name = "idx_role_name" ,columnList = "name")
+    }
+)
 @Getter
 @Setter
 @NoArgsConstructor
@@ -21,9 +25,12 @@ public class Role extends BaseEntity{
     @Column(nullable = false, unique = true)
     private RoleName name;
 
+    @Column(length = 300)
     private  String description;
 
-    @ManyToMany(mappedBy = "roles")
+    @ManyToMany(mappedBy = "roles",
+            fetch = FetchType.LAZY
+    )
     @Builder.Default
     private Set<User> users = new HashSet<>();
 }
