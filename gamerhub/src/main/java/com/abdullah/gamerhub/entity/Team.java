@@ -7,7 +7,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -68,10 +70,26 @@ public class Team extends BaseEntity{
     @Builder.Default
     private Set<TeamMember> members = new HashSet<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "game_id", nullable = false,
-            foreignKey = @ForeignKey(name = "fk_team_game")
+    // game
+    @OneToMany(
+            mappedBy = "team",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
     )
-    private Game game;
+    private List<TeamGame> teamGames = new ArrayList<>();
+
+    // Tournament Team
+    @OneToMany(
+            mappedBy = "team",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    @Builder.Default
+    private List<TournamentTeam> tournamentRegistrations =
+            new ArrayList<>();
+
+    @OneToMany(mappedBy = "team")
+    @Builder.Default
+    private List<MatchParticipant> matches = new ArrayList<>();
 
 }

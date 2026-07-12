@@ -5,7 +5,9 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -41,7 +43,10 @@ public class Game extends BaseEntity{
     private Set<Tournament> tournaments = new HashSet<>();
 
     // Team Relation
-    @OneToMany(mappedBy = "game", fetch = FetchType.LAZY)
-    @Builder.Default
-    private Set<Team> teams = new HashSet<>();
+    @OneToMany(
+            mappedBy = "game",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<TeamGame> teamGames = new ArrayList<>();
 }

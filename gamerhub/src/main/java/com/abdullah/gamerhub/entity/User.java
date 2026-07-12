@@ -10,7 +10,9 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -132,11 +134,17 @@ public class User extends BaseEntity {
     @Builder.Default
     private Set<Team> ownedTeams = new HashSet<>();
 
-    //Tournament Participations
-//    @OneToMany(
-//            mappedBy = "user",
-//            fetch = FetchType.LAZY
-//    )
-//    @Builder.Default
-//    private Set<TournamentPlayer> tournamentParticipations = new HashSet<>();
+    //Tournament Player
+    @OneToMany(
+            mappedBy = "player",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    @Builder.Default
+    private List<TournamentPlayer> tournamentRegistrations = new ArrayList<>();
+
+    @OneToMany(mappedBy = "player")
+    @Builder.Default
+    private List<MatchParticipant> matches = new ArrayList<>();
+
 }

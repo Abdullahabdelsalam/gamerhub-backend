@@ -6,12 +6,12 @@ import lombok.*;
 
 @Entity
 @Table(
-        name = "tournament_players",
+        name = "tournament_teams",
         uniqueConstraints = {
                 @UniqueConstraint(
                         columnNames = {
                                 "tournament_id",
-                                "player_id"
+                                "team_id"
                         }
                 )
         }
@@ -21,7 +21,9 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class TournamentPlayer extends BaseEntity{
+public class TournamentTeam extends BaseEntity {
+
+    private Integer seed;
 
     @Builder.Default
     private Integer score = 0;
@@ -48,11 +50,11 @@ public class TournamentPlayer extends BaseEntity{
     )
     private Tournament tournament;
 
-    // Player
+    // Team
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(
-            name = "player_id",
+            name = "team_id",
             nullable = false
     )
-    private User player;
+    private Team team;
 }

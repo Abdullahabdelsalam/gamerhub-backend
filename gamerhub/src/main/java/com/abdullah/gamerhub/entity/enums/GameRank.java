@@ -1,0 +1,15 @@
+package com.abdullah.gamerhub.entity.enums;
+
+public enum GameRank {
+    GAME_RANK_UNRANKED,
+
+    GAME_RANK_IRON,
+    GAME_RANK_BRONZE,
+    GAME_RANK_SILVER,
+    GAME_RANK_GOLD,
+    GAME_RANK_PLATINUM,
+    GAME_RANK_DIAMOND,
+    GAME_RANK_ASCENDANT,
+    GAME_RANK_IMMORTAL,
+    GAME_RANK_RADIANT
+}
