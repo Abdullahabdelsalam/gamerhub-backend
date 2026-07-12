@@ -203,3 +203,30 @@ Establish a solid foundation before development begins to avoid chaos and ensure
 - **Phase 5**: Documentation, Docker, tests, deployment
 
 ---
+                                  Role
+                                   ▲
+                                   │ ManyToMany
+                                   │
+                                   ▼
+                                 User
+      ┌─────────────┬──────────────┬───────────────┬──────────────┬──────────────┐
+      │             │              │               │              │              │
+      ▼             ▼              ▼               ▼              ▼              ▼
+RefreshToken     Team(owner)   TournamentPlayer   Post        Notification    Follow
+                      │               │             │
+                      │               │             ├──────────────┐
+                      ▼               │             ▼              ▼
+                 TeamMember           │         Comment        PostLike
+                      ▲               │             │
+                      │               │             ▼
+                     Team             │        CommentLike
+                      │               │
+                      ▼               ▼
+                     Game ───────► Tournament
+                                      │
+                       ┌──────────────┴──────────────┐
+                       ▼                             ▼
+                TournamentTeam                    Match
+                                                      │
+                                                      ▼
+                                              MatchParticipant
