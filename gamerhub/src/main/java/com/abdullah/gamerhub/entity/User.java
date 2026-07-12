@@ -189,4 +189,14 @@ public class User extends BaseEntity {
     )
     @Builder.Default
     private Set<Follow> followers = new HashSet<>();
+
+    // Notification
+    @OneToMany(
+            mappedBy = "user",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
+    )
+    @Builder.Default
+    private Set<Notification> notifications = new HashSet<>();
 }
