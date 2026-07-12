@@ -203,8 +203,6 @@ Establish a solid foundation before development begins to avoid chaos and ensure
 - **Phase 5**: Documentation, Docker, tests, deployment
 
 ---
-
----
                                   Role
                                    ▲
                                    │ ManyToMany
