@@ -201,33 +201,103 @@ Establish a solid foundation before development begins to avoid chaos and ensure
 - **Phase 3**: JWT integration & session management
 - **Phase 4**: OAuth2 + business features
 - **Phase 5**: Documentation, Docker, tests, deployment
-
----
-                                  Role
-                                   ▲
-                                   │ ManyToMany
+```text
+                                                    ┌──────────────┐
+                                                    │     Role     │
+                                                    └──────┬───────┘
+                                                           │
+                                                     Many-to-Many
+                                                           │
+                                                           ▼
+                                                ┌──────────────────┐
+                                                │       User       │
+                                                └──────────────────┘
+             ┌──────────────────────┬──────────────────────┬──────────────────────┬──────────────────────┬──────────────────────┐
+             │                      │                      │                      │                      │
+             ▼                      ▼                      ▼                      ▼                      ▼
+    ┌────────────────┐     ┌────────────────┐     ┌────────────────┐     ┌────────────────┐     ┌────────────────┐
+    │ RefreshToken   │     │      Team      │     │ TournamentPlayer│     │      Post      │     │  Notification  │
+    └────────────────┘     └────────┬───────┘     └────────┬───────┘     └────────┬───────┘     └────────────────┘
+                                    │                      │                      │
+                               Owner│                      │                      │
+                                    │                      │                      ▼
+                                    │                      │             ┌────────────────┐
+                                    ▼                      │             │    Comment     │
+                          ┌────────────────┐                │             └────────┬───────┘
+                          │  TeamMember    │                │                      │
+                          └────────▲───────┘                │                      ▼
+                                   │                        │             ┌────────────────┐
+                                   │                        │             │ CommentLike    │
+                                   │                        │             └────────────────┘
+                                   │                        │
+                          ┌────────┴────────┐               │
+                          │      Team       │◄──────────────┘
+                          └────────┬────────┘
+                                   │
+                      Many-to-Many │
+                                   ▼
+                          ┌────────────────┐
+                          │    TeamGame    │
+                          └────────▲───────┘
+                                   │
+                                   │
+                          ┌────────┴────────┐
+                          │      Game       │
+                          └────────┬────────┘
+                                   │
+                           One-to-Many
                                    │
                                    ▼
-                                 User
-      ┌─────────────┬──────────────┬───────────────┬──────────────┬──────────────┐
-      │             │              │               │              │              │
-      ▼             ▼              ▼               ▼              ▼              ▼
-RefreshToken     Team(owner)   TournamentPlayer   Post        Notification    Follow
-                      │               │             │
-                      │               │             ├──────────────┐
-                      ▼               │             ▼              ▼
-                 TeamMember           │         Comment        PostLike
-                      ▲               │             │
-                      │               │             ▼
-                     Team             │        CommentLike
-                      │               │
-                      ▼               ▼
-                     Game ───────► Tournament
-                                      │
-                       ┌──────────────┴──────────────┐
-                       ▼                             ▼
-                TournamentTeam                    Match
-                                                      │
-                                                      ▼
-                                              MatchParticipant
----
+                    ┌────────────────────────────────┐
+                    │          Tournament            │◄──────────────┐
+                    └──────────────┬─────────────────┘               │
+                                   │                                 │
+                    ┌──────────────┴──────────────┐                  │
+                    │                             │                  │
+                    ▼                             ▼                  │
+          ┌──────────────────┐         ┌──────────────────┐         │
+          │ TournamentTeam   │         │      Match       │         │
+          └──────────────────┘         └────────┬─────────┘         │
+                                                │                   │
+                                                ▼                   │
+                                      ┌──────────────────┐          │
+                                      │ MatchParticipant │          │
+                                      └──────────────────┘          │
+                                                                    │
+                                                           ┌──────────────────┐
+                                                           │  Championship    │
+                                                           └──────────────────┘
+
+
+                         ───────────────────────────────────────────────────────
+
+ User
+ ├── Roles
+ ├── Refresh Tokens
+ ├── Owned Teams
+ ├── Team Memberships
+ ├── Tournament Registrations
+ ├── Posts
+ ├── Notifications
+ └── Follow Relationships
+
+ Team
+ ├── Members
+ ├── Games
+ └── Tournament Registrations
+
+ Game
+ ├── Teams
+ └── Tournaments
+
+ Championship
+ └── Tournaments
+
+ Tournament
+ ├── Players
+ ├── Teams
+ └── Matches
+
+ Match
+ └── Participants
+```
