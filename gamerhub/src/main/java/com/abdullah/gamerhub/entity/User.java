@@ -143,8 +143,50 @@ public class User extends BaseEntity {
     @Builder.Default
     private List<TournamentPlayer> tournamentRegistrations = new ArrayList<>();
 
+    //matches
     @OneToMany(mappedBy = "player")
     @Builder.Default
     private List<MatchParticipant> matches = new ArrayList<>();
 
+    //posts
+    @OneToMany(mappedBy = "user")
+    private Set<Post> posts;
+
+    //comments
+    @OneToMany(
+            mappedBy = "user",
+            fetch = FetchType.LAZY
+    )
+    @Builder.Default
+    private Set<Comment> comments = new HashSet<>();
+
+    //postLikes
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @Builder.Default
+    private Set<PostLike> postLikes = new HashSet<>();
+
+    //commentLikes
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @Builder.Default
+    private Set<CommentLike> commentLikes = new HashSet<>();
+
+    // Users I Follow
+    @OneToMany(
+            mappedBy = "follower",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
+    )
+    @Builder.Default
+    private Set<Follow> following = new HashSet<>();
+
+    // Users Following Me
+    @OneToMany(
+            mappedBy = "following",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
+    )
+    @Builder.Default
+    private Set<Follow> followers = new HashSet<>();
 }
