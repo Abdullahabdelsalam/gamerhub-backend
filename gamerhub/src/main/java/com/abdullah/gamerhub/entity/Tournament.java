@@ -2,10 +2,10 @@ package com.abdullah.gamerhub.entity;
 
 import com.abdullah.gamerhub.entity.enums.TournamentStatus;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -43,15 +43,22 @@ public class Tournament extends BaseEntity{
     @Column(nullable = false)
     private LocalDateTime endDate;
 
+    @Column(nullable = false)
+    private LocalDateTime registrationDeadline;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 30)
-    private TournamentStatus status;
+    @Builder.Default
+    private TournamentStatus status = TournamentStatus.UPCOMING;
 
-    @Column(nullable = false)
-    private Integer maxPlayers;
+    @NotNull
+    @Min(2)
+    private Integer maxParticipants;
 
-    @Column(nullable = false)
-    private Double prizePool;
+    @NotNull
+    @DecimalMin("0.00")
+    @Column(nullable = false, precision = 15, scale = 2)
+    private BigDecimal prizePool;
 
 
     // game relation
@@ -90,6 +97,7 @@ public class Tournament extends BaseEntity{
     @Builder.Default
     private List<TournamentTeam> teams = new ArrayList<>();
 
+    // championship
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "championship_id")
     private Championship championship;
