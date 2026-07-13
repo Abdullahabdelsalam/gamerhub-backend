@@ -3,9 +3,8 @@ package com.abdullah.gamerhub.entity;
 import com.abdullah.gamerhub.entity.enums.TeamMemberStatus;
 import com.abdullah.gamerhub.entity.enums.TeamRole;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "team_members",
@@ -30,16 +29,17 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class TeamMember extends BaseEntity{
+
+    @NotNull
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private TeamRole role;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private TeamMemberStatus status;
-
-    @Column(nullable = false)
-    private LocalDateTime joinedAt;
+    @Builder.Default
+    private TeamMemberStatus status = TeamMemberStatus.TEAM_MEMBER_STATUS_PENDING;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false,
