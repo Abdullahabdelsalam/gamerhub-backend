@@ -35,7 +35,13 @@ public class Game extends BaseEntity{
     private Genre genre;
 
     @Column(length = 500)
-    private String imageUrl;
+    private String website;
+
+    @Column(length = 500)
+    private String logoUrl;
+
+    @Column(length = 500)
+    private String coverImageUrl;
 
     // tournament relation
     @OneToMany(mappedBy = "game", fetch = FetchType.LAZY)
