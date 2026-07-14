@@ -2,11 +2,18 @@ package com.abdullah.gamerhub.entity;
 
 import com.abdullah.gamerhub.entity.enums.TournamentRegistrationStatus;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Entity
 @Table(
         name = "tournament_players",
+        indexes = {
+                @Index(name = "idx_tp_tournament", columnList = "tournament_id"),
+                @Index(name = "idx_tp_player", columnList = "player_id"),
+                @Index(name = "idx_tp_status", columnList = "status")
+        },
         uniqueConstraints = {
                 @UniqueConstraint(
                         columnNames = {
@@ -23,20 +30,27 @@ import lombok.*;
 @Builder
 public class TournamentPlayer extends BaseEntity{
 
+    @Min(0)
     @Builder.Default
+    @Column(nullable = false)
     private Integer score = 0;
 
+    @Min(1)
     private Integer rank;
 
     @Builder.Default
+    @Column(nullable = false)
     private Boolean eliminated = false;
 
     @Builder.Default
+    @Column(nullable = false)
     private Boolean checkedIn = false;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+
+    @NotNull
     @Builder.Default
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 30)
     private TournamentRegistrationStatus status =
             TournamentRegistrationStatus.PENDING;
 
@@ -44,7 +58,10 @@ public class TournamentPlayer extends BaseEntity{
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(
             name = "tournament_id",
-            nullable = false
+            nullable = false,
+            foreignKey = @ForeignKey(
+                    name = "fk_tp_tournament"
+            )
     )
     private Tournament tournament;
 
@@ -52,7 +69,10 @@ public class TournamentPlayer extends BaseEntity{
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(
             name = "player_id",
-            nullable = false
+            nullable = false,
+            foreignKey = @ForeignKey(
+                    name = "fk_tp_player"
+            )
     )
     private User player;
 }
