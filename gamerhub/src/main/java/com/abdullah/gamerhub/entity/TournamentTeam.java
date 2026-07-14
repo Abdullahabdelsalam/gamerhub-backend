@@ -6,6 +6,9 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(
         name = "tournament_teams",
@@ -67,4 +70,13 @@ public class TournamentTeam extends BaseEntity {
             foreignKey = @ForeignKey(name = "fk_tt_team")
     )
     private Team team;
+
+    @OneToMany(
+            mappedBy = "tournamentTeam",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
+    )
+    @Builder.Default
+    private List<MatchParticipant> matchParticipants = new ArrayList<>();
 }

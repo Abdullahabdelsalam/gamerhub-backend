@@ -6,6 +6,9 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(
         name = "tournament_players",
@@ -74,4 +77,13 @@ public class TournamentPlayer extends BaseEntity{
             )
     )
     private User player;
+
+    @OneToMany(
+            mappedBy = "tournamentPlayer",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
+    )
+    @Builder.Default
+    private List<MatchParticipant> matchParticipants = new ArrayList<>();
 }
