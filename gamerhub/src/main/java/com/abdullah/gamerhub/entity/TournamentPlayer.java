@@ -40,19 +40,18 @@ public class TournamentPlayer extends BaseEntity{
 
     @Builder.Default
     @Column(nullable = false)
-    private Boolean eliminated = false;
+    private boolean eliminated = false;
 
     @Builder.Default
     @Column(nullable = false)
-    private Boolean checkedIn = false;
+    private boolean checkedIn = false;
 
 
     @NotNull
     @Builder.Default
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 30)
-    private TournamentRegistrationStatus status =
-            TournamentRegistrationStatus.PENDING;
+    private TournamentRegistrationStatus status = TournamentRegistrationStatus.PENDING;
 
     // Tournament
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
