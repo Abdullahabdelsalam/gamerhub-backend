@@ -18,12 +18,16 @@ import java.util.List;
 public class Championship extends BaseEntity{
 
     @Column(nullable = false, length = 150)
-    private String name;
+    private String title;
 
     @Column(length = 500)
     private String description;
 
-    private String location;
+    private String bannerUrl;
+
+    private String logoUrl;
+
+    private String country;
 
     private LocalDate startDate;
 
