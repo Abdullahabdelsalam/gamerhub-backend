@@ -50,7 +50,4 @@ public class TeamGame extends BaseEntity{
 
     private Integer rankingPoints;
 
-
-
-
 }
