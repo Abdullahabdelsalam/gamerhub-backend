@@ -143,10 +143,10 @@ public class User extends BaseEntity {
     @Builder.Default
     private List<TournamentPlayer> tournamentRegistrations = new ArrayList<>();
 
-    //matches
-    @OneToMany(mappedBy = "player")
-    @Builder.Default
-    private List<MatchParticipant> matches = new ArrayList<>();
+//    //matches
+//    @OneToMany(mappedBy = "player")
+//    @Builder.Default
+//    private List<MatchParticipant> matches = new ArrayList<>();
 
     //posts
     @OneToMany(mappedBy = "user")

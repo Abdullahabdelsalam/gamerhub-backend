@@ -112,10 +112,11 @@ public class Team extends BaseEntity{
             new ArrayList<>();
 
     @OneToMany(mappedBy = "team",
+            cascade = CascadeType.ALL,
             fetch = FetchType.LAZY
     )
     @Builder.Default
-    private List<MatchParticipant> matches = new ArrayList<>();
+    private List<MatchParticipant> matchParticipant = new ArrayList<>();
 
     //======== Helper Methods
     public void addMember(TeamMember member) {
@@ -164,19 +165,19 @@ public class Team extends BaseEntity{
         registration.setTeam(null);
 
     }
-    public void addMatchParticipant(MatchParticipant participant) {
-
-        matches.add(participant);
-
-        participant.setTeam(this);
-
-    }
-    public void removeMatchParticipant(MatchParticipant participant) {
-
-        matches.remove(participant);
-
-        participant.setTeam(null);
-
-    }
+//    public void addMatchParticipant(MatchParticipant participant) {
+//
+//        matches.add(participant);
+//
+//        participant.setTeam(this);
+//
+//    }
+//    public void removeMatchParticipant(MatchParticipant participant) {
+//
+//        matches.remove(participant);
+//
+//        participant.setTeam(null);
+//
+//    }
 
 }

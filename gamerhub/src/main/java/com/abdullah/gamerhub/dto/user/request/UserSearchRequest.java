@@ -9,7 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserSearchRequest extends PageRequestDto {
+public class UserSearchRequest {
     @Size(max = 50, message = "Search username query too long")
     private String username;
 

@@ -68,6 +68,14 @@ public class MatchParticipant extends BaseEntity {
     )
     private Match match;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(
+            name = "team_id",
+            nullable = false,
+            foreignKey = @ForeignKey(name = "fk_team_participant_match")
+    )
+    private Team team;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "tournament_player_id",
@@ -81,4 +89,6 @@ public class MatchParticipant extends BaseEntity {
             foreignKey = @ForeignKey(name = "fk_match_participant_team")
     )
     private TournamentTeam tournamentTeam;
+
+
 }

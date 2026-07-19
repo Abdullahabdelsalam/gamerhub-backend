@@ -10,7 +10,7 @@ import org.springframework.data.domain.PageRequest;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class GameSearchRequest extends PageRequestDto{
+public class GameSearchRequest {
 
     private String keyword;
 
